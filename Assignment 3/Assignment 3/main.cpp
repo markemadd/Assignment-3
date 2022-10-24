@@ -11,10 +11,7 @@
 using namespace std;
 
 void insertAfter(vector<int> &values, int first_value, int second_value){
-    // 1, 8, 3, 8, 4 ,5, 8, 6
     for(int i=0; i<values.size(); i++){
-//        cout<<"Current: "<<i+1<<endl;
-//        cout<<"Size: "<<values.size()<<endl;
         if(values[i]==first_value)
             values.insert(values.begin()+i+1, (int) second_value);
     }
@@ -39,14 +36,25 @@ int main() {
     cout<<"Enter second value"<<endl;
     cin>>second_value;
     
-//    cout<<values.size();
+
     
     insertAfter(values, first_value, second_value);
     cout<<"Function ended"<<endl;
     
     for(int i=0; i<values.size(); i++)
         cout<<values[i]<<endl;
-
+    
+    Linked_list LL;
+    int x;
+    Linked_list* p=NULL;
+    LL.add_front_node(&p, x);
+    LL.insert_node(* &p, x);
+    LL.insert_node_end(&p, x);
+    LL.delete_last_node(* &p);
+    LL.print_elements(* &p);
+    LL.check_occurence(values, &p);
+    LL.calc_sum(&p);
+    
     return 0;
 }
 

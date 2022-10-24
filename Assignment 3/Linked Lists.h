@@ -12,9 +12,10 @@ using namespace std;
 #define Linked_Lists_h
 
 class Linked_list{
-    struct Node{
+public:
+    //struct Node{
         int value;
-        Node* next;
+        Linked_list* next;
         int num_occurences;
         void set_value(int v){
             value=v;
@@ -22,12 +23,11 @@ class Linked_list{
         int get_value(){
             return value;
         }
-    };
-void add_front_node(struct Node** head, int new_value)// inserts node in the front of the LL
+void add_front_node(Linked_list** head, int new_value)// inserts node in the front of the LL
 {
 
         
-    struct Node* new_node = new Node; // allocate node
+    Linked_list* new_node = new Linked_list; // allocate node
 
     new_node->value = new_value;  // put in the data
 
@@ -37,18 +37,18 @@ void add_front_node(struct Node** head, int new_value)// inserts node in the fro
                         // the new node
     }
     
-    void insert_node(struct Node* prev_node, int new_value) //insert the node in a specific place
+    void insert_node(Linked_list* prev_node, int new_value) //insert the node in a specific place
     {
-        Node* new_node = new Node();       // creats new node
+        Linked_list* new_node = new Linked_list();       // creats new node
         new_node->value = new_value;      // saves the new value in "value"
         new_node->next = prev_node->next;// Make next of new node as
                                         // next of prev_node
         prev_node->next = new_node;    // move the next of prev_node
                                       // as new_node
     }
-    void insert_node_end(struct Node** head, int new_value){ //inserts node in the end of LL
-        struct Node* new_node= new Node;// creats new node
-        struct Node *last = *head;
+    void insert_node_end(Linked_list** head, int new_value){ //inserts node in the end of LL
+        Linked_list* new_node= new Linked_list;// creats new node
+        Linked_list *last = *head;
         new_node->value = new_value;  //assign new value to the node's value
         new_node->next = NULL;  //set next pointer of new node to null as it is the last node
             
@@ -61,8 +61,8 @@ void add_front_node(struct Node** head, int new_value)// inserts node in the fro
             last->next = new_node;   //Change the next of last node
             return;
     }
-    void delete_last_node(struct Node* head){ //function that deletes the last node
-        Node* q= head;
+    void delete_last_node(Linked_list* head){ //function that deletes the last node
+        Linked_list* q= head;
         while(q->next->next != NULL)
             q = q->next;
         
@@ -71,34 +71,47 @@ void add_front_node(struct Node** head, int new_value)// inserts node in the fro
        
         
     }
-    void print_elements(Node* prev_node){ //function that prints all elements in the linked list
-        Node* q;
+    void print_elements(Linked_list* prev_node){ //function that prints all elements in the linked list
+        Linked_list* q;
         q=prev_node;
         while (q!=NULL){
             cout<<q->value<<endl;
             q=q->next;}
     }
-    void check_occurence(vector<int> values,struct Node** head_ref ){
+    bool search(Linked_list* head, int x)
+    {
+        Linked_list* q = head;
+        while (q != NULL) {
+            if (q->value == x)
+                return true;
+            q = q->next;
+        }
+        return false;
+    }
+    void check_occurence(vector<int> values,Linked_list** head_ref ){
         int occurences=0;
         for (int i=0; i<values.size();i++){
             for (int j=1;j<values.size()-1;j++){
                 if (values[i]==values[j]){
-                    struct Node* new_node = new Node;
+                    Linked_list* new_node = new Linked_list;
+                    if (new_node->value==values[i]){
                     new_node->value = values[i];
                     new_node->num_occurences = occurences;
-                    struct Node *last = *head_ref;
+                    Linked_list *last = *head_ref;
                     while (last->next != NULL)
                     last = last->next;
                     last->next = new_node;
                     new_node->next = NULL;
+                    if(search(*head_ref, values[i])==true)
                     occurences++;}
+                }
             }
             
         }
     }
-    int calc_sum( struct Node** head_ref){//function that calculates the sum of values in the LL
+    int calc_sum(Linked_list** head_ref){//function that calculates the sum of values in the LL
         int sum=0;
-        struct Node *last = *head_ref;
+        Linked_list *last = *head_ref;
         while (last->next != NULL){
             last = last->next;
             }
